@@ -37,7 +37,6 @@ def mostra_tabuleiro(tabuleiro):
         for j in range(10):
             print(tabuleiro[i][j], end=' ')
         print()
-        return 0
 
 #Função que limpa o terminal
 def limpa_terminal():
@@ -56,5 +55,5 @@ def main():
         mostra_tabuleiro(tabuleiro)
         limpa_terminal()
 
-#Chamada da funnção principal do programa
+#Chamada da função principal do programa
 main()
