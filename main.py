@@ -9,7 +9,7 @@ def inicia_tabuleiro(n_linhas, n_colunas):
     for l in range(n_linhas):
         linha=[]
         for c in range(n_colunas):
-            linha.append(0)
+            linha.append('⬛')
         tabuleiro.append(linha)
     return tabuleiro
 
@@ -39,12 +39,20 @@ def escolhe_peca(pecas):
 
 #Função que adiciona a peça selecionada no tabuleiro 
 def adiciona_peca(tabuleiro, pecas, peca_selecionada):
-    posicao_x=random.randint(0, 9)
+    posicao_x=posicao_x_aleatoria(pecas, peca_selecionada)
     posicao_y=0
     for l in range(len(peca_selecionada)):
         for c in range(len(peca_selecionada[l])):
             if peca_selecionada[l][c]=='1':
-                tabuleiro[posicao_y+l][posicao_x+c]='1'
+                tabuleiro[posicao_y+l][posicao_x+c]='🟩'
+
+def posicao_x_aleatoria(pecas, peca_selecionada):
+    if peca_selecionada==pecas[0]:
+        return random.randint(0, 9)
+    elif peca_selecionada==pecas[1]:
+        return random.randint(0, 8)
+    else:
+        return random.randint(0, 7)
 
 #Função que mostra o tabuleiro
 def mostra_tabuleiro(n_linhas, n_colunas, tabuleiro):
@@ -69,8 +77,7 @@ def main():
         peca_selecionada=escolhe_peca(pecas)
         adiciona_peca(tabuleiro, pecas, peca_selecionada)
         mostra_tabuleiro(20, 10, tabuleiro)
-        #limpa_terminal()
-        break
+        limpa_terminal()
 
 #Chamada da função principal do programa
 main()
