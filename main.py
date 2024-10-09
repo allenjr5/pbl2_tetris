@@ -1,75 +1,55 @@
-#Importação de Bibliotecas
+#Importação de bibliotecas que serão utilizadas no código
 import os
 import time
 import random
 
-#Função que inicia o tabuleiro
-def inicia_tabuleiro(n_linhas, n_colunas):
-    tabuleiro=[]
-    for l in range(n_linhas):
-        linha=[]
-        for c in range(n_colunas):
-            linha.append('⬛')
-        tabuleiro.append(linha)
-    return tabuleiro
+#Declaração de variáveis que serão utilizadas com frequência no código
+n_linhas=20
+n_colunas=10
 
-#Função que inicia as peças
-def inicia_pecas():
-    pecas=[
-        #Peça I
-        ['1', '1', '1', '1'],
-        #Peça O
-        [['1', '1'], ['1', '1']],
-        #Peça T
-        [['1', '1', '1'], ['0', '1', '0']],
-        #Peça S
-        [['0', '1', '1'], ['1', '1', '0']],
-        #Peça Z
-        [['1', '1', '0'], ['0', '1', '1']],
-        #Peça J
-        [['1', '0', '0'], ['1', '1', '1']],
-        #Peça L
-        [['0', '0', '1'], ['1', '1', '1']]
-    ]
-    return pecas
+#Inicialização da matriz do tabuleiro
+tabuleiro=[]
+for l in range(n_linhas):
+    linha=[]
+    for c in range(n_colunas):
+        linha.append('⬛')
+    tabuleiro.append(linha)
 
-#Função que seleciona a peça a ser adicionada no tabuleiro
-def seleciona_peca(pecas):
-    return random.choice(pecas)
+#Inicialização das matrizes das peças em forma de dicionário
+pecas={
+    'I': ['1', '1', '1', '1'],
+    'O': [['1', '1'], ['1', '1']],
+    'T': [['1', '1', '1'], ['0', '1', '0']],
+    'S': [['0', '1', '1'], ['1', '1', '0']],
+    'Z': [['1', '1', '0'], ['0', '1', '1']],
+    'J': [['1', '0', '0'], ['1', '1', '1']],
+    'L': [['0', '0', '1'], ['1', '1', '1']]
+}
 
-#Função que adiciona a peça selecionada no tabuleiro 
-def adiciona_peca(tabuleiro, pecas, peca_selecionada):
-    posicao_x=posicao_x_aleatoria(pecas, peca_selecionada)
-    posicao_y=0
-    for l in range(len(peca_selecionada)):
-        for c in range(len(peca_selecionada[l])):
-            if peca_selecionada[l][c]=='1':
-                tabuleiro[posicao_y+l][posicao_x+c]='🟩'
-    return tabuleiro
-
-#Função que define uma posição x aleatória para cada peça diferente
-def posicao_x_aleatoria(pecas, peca_selecionada):
-    if peca_selecionada==pecas[0]:
-        return random.randint(0, 9)
-    elif peca_selecionada==pecas[1]:
-        return random.randint(0, 8)
-    else:
-        return random.randint(0, 7)
-
-#Função que desce as peças no tabuleiro
-def desce_peca(tabuleiro):
-    return 0
-
-#Função que mostra o tabuleiro
-def mostra_tabuleiro(n_linhas, n_colunas, tabuleiro):
+#Função que mostra o tabuleiro no terminal
+def mostra_tabuleiro():
     for l in range(n_linhas):
         for c in range(n_colunas):
             print(tabuleiro[l][c], end=' ')
         print()
+    time.sleep(1)
+
+#Função que adiciona uma peça no tabuleiro e move automaticamente para baixo
+def adiciona_peca(peca, py, px):
+    for l in range(len(peca)):
+        for c in range(len(peca[l])):
+            if peca[l][c]=='1':
+                tabuleiro[l+py][c+px]='🟦'
+
+#Função que limpa a posição anterior da peça no tabuleiro
+def limpa_peca(peca, py, px):
+    for l in range(len(peca)):
+        for c in range(len(peca[l])):
+            if peca[l][c]=='1':
+                tabuleiro[l+py][c+px]='⬛'
 
 #Função que limpa o terminal
 def limpa_terminal():
-    time.sleep(1)
     if os.name=='nt':
         os.system('cls')
     else:
@@ -77,14 +57,15 @@ def limpa_terminal():
 
 #Função principal do programa
 def main():
-    tabuleiro=inicia_tabuleiro(20, 10)
-    pecas=inicia_pecas()
     while True:
-        peca_selecionada=seleciona_peca(pecas)
-        adiciona_peca(tabuleiro, pecas, peca_selecionada)
+        peca=random.choice(list(pecas.values()))
+        posicao_y=0
+        posicao_x=random.randint(0, 9 - len(peca[0]))
         while True:
-            mostra_tabuleiro(20, 10, tabuleiro)
-            desce_peca(tabuleiro)
+            adiciona_peca(peca, posicao_y, posicao_x)
+            mostra_tabuleiro()
+            limpa_peca(peca, posicao_y, posicao_x)
+            posicao_y+=1
             limpa_terminal()
 
 #Chamada da função principal do programa
