@@ -13,16 +13,16 @@ for l in range(n_linhas):
         linha.append('⬛')
     tabuleiro.append(linha)
 
-#Inicialização das matrizes das peças em forma de dicionário
-pecas={
-    'I': ['1', '1', '1', '1'],
-    'O': [['1', '1'], ['1', '1']],
-    'T': [['1', '1', '1'], ['0', '1', '0']],
-    'S': [['0', '1', '1'], ['1', '1', '0']],
-    'Z': [['1', '1', '0'], ['0', '1', '1']],
-    'J': [['1', '0', '0'], ['1', '1', '1']],
-    'L': [['0', '0', '1'], ['1', '1', '1']]
-}
+#Inicialização das matrizes das peças
+pecas=[
+    ['1', '1', '1', '1'],
+    [['1', '1'], ['1', '1']],
+    [['1', '1', '1'], ['0', '1', '0']],
+    [['0', '1', '1'], ['1', '1', '0']],
+    [['1', '1', '0'], ['0', '1', '1']],
+    [['1', '0', '0'], ['1', '1', '1']],
+    [['0', '0', '1'], ['1', '1', '1']]
+]
 
 #Função que mostra o tabuleiro no terminal
 def mostra_tabuleiro():
@@ -48,18 +48,12 @@ def limpa_peca(peca, py, px):
 
 #Função que limpa o terminal
 def limpa_terminal():
-    if os.name=='nt':
-        os.system('cls')
-    else:
-        os.system('clear')
-
-def verifica_colisao(peca, py, px):
-    return True
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 #Função principal do programa
 def main():
     while True:
-        peca=random.choice(list(pecas.values()))
+        peca=random.choice(pecas)
         posicao_y=0
         posicao_x=random.randint(0, 9 - len(peca[0]))
         while True:
