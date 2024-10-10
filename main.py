@@ -1,7 +1,5 @@
 #Importação de bibliotecas que serão utilizadas no código
-import os
-import time
-import random
+import os, time, random
 
 #Declaração de variáveis que serão utilizadas com frequência no código
 n_linhas=20
@@ -32,7 +30,7 @@ def mostra_tabuleiro():
         for c in range(n_colunas):
             print(tabuleiro[l][c], end=' ')
         print()
-    time.sleep(1)
+    time.sleep(0.5)
 
 #Função que adiciona uma peça no tabuleiro e move automaticamente para baixo
 def adiciona_peca(peca, py, px):
@@ -54,6 +52,9 @@ def limpa_terminal():
         os.system('cls')
     else:
         os.system('clear')
+
+def verifica_colisao(peca, py, px):
+    return True
 
 #Função principal do programa
 def main():
