@@ -64,10 +64,10 @@ def verifica_linhas():
     #Verifica se existem linhas completas
     linhas_completas = [i for i in range(len(tabuleiro)) if all(c == '🟦' for c in tabuleiro[i])]
     
-    #Apaga as linhas completas e adiciona linhas vazias no topo do tabuleiro
+    #Remove as linhas completas e adiciona linhas vazias no topo do tabuleiro
     for linha in linhas_completas:
-        tabuleiro.pop(linha)  # Remove a linha completa
-        tabuleiro.insert(0, ['⬛' for _ in range(n_colunas)])  # Adiciona uma nova linha no topo
+        tabuleiro.pop(linha)
+        tabuleiro.insert(0, ['⬛' for _ in range(n_colunas)])
         n_linhas += 1
     
     #Soma a pontuação de acordo com o número de linhas completas
