@@ -4,6 +4,7 @@ import os, time, random, keyboard
 #Declaração de variáveis que serão utilizadas com frequência ao longo do código
 n_linhas = 20
 n_colunas = 10
+pontuacao = 0
 
 #Inicialização da matriz do tabuleiro
 tabuleiro = [['⬛' for _ in range(n_colunas)] for _ in range(n_linhas)]
@@ -25,7 +26,7 @@ def mostra_tabuleiro():
         for c in range(n_colunas):
             print(tabuleiro[l][c], end=' ')
         print()
-    print(f'Pontos: ')
+    print(f'Pontos: {pontuacao}')
     time.sleep(0.3)
 
 #Função que adiciona a peça
@@ -57,10 +58,21 @@ def girar_peca(peca):
 
 #Função que verifica se existem linhas completas e as limpa
 def verifica_linhas():
-    linhas_completas = [l for l in range(n_linhas) if all(c == '🟦' for c in tabuleiro[l])]
+    global pontuacao
+    n_linhas = 0
+    
+    #Verifica se existem linhas completas
+    linhas_completas = [i for i in range(len(tabuleiro)) if all(c == '🟦' for c in tabuleiro[i])]
+    
+    #Apaga as linhas completas e adiciona linhas vazias no topo do tabuleiro
     for linha in linhas_completas:
-        tabuleiro.pop(linha)
-        tabuleiro.insert(0, ['⬛' for _ in range(n_colunas)])
+        tabuleiro.pop(linha)  # Remove a linha completa
+        tabuleiro.insert(0, ['⬛' for _ in range(n_colunas)])  # Adiciona uma nova linha no topo
+        n_linhas += 1
+    
+    #Soma a pontuação de acordo com o número de linhas completas
+    if n_linhas > 0:
+        pontuacao += 100 * n_linhas
 
 #Função que limpa o terminal
 def limpa_terminal():
@@ -115,7 +127,7 @@ def main():
                     posicao_y += 1
             
             #Faz com que a peça gire ao apertar o botão 'cima'
-            elif keyboard.is_pressed('up'):  # Gira a peça ao pressionar 'up'
+            elif keyboard.is_pressed('up'):
                 peca_girada = girar_peca(peca)
                 if not verifica_colisao(peca_girada, posicao_y, posicao_x):
                     peca = peca_girada
