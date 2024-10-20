@@ -41,6 +41,10 @@ def limpa_peca(peca, py, px):
             if peca[l][c] == '1':
                 tabuleiro[py + l][px + c] = '⬛'
 
+#Função que gira a peça
+def girar_peca(peca):
+    return [list(linha) for linha in zip(*peca[::-1])]
+
 #Função que verifica a colisão da peça
 def verifica_colisao(peca, py, px):
     for l in range(len(peca)):
@@ -72,20 +76,27 @@ def main():
             #Desce as peças automaticamente para baixo e verifica a colisão
             if not verifica_colisao(peca, posicao_y + 1, posicao_x):
                 posicao_y += 1
-                #Move as peças para os lados ao apertar os botões esquerda e direita, e faz a peça descer mais rápido ao apertar o botão baixo
-                if keyboard.is_pressed('left'):
-                    if not verifica_colisao(peca, posicao_y, posicao_x - 1):
-                        posicao_x -= 1
-                elif keyboard.is_pressed('right'):
-                    if not verifica_colisao(peca, posicao_y, posicao_x + 1):
-                        posicao_x += 1
-                elif keyboard.is_pressed('down'):
-                    if not verifica_colisao(peca, posicao_y + 1, posicao_x):
-                        posicao_y += 1
             else:
                 limpa_terminal()
                 adiciona_peca(peca, posicao_y, posicao_x)
                 break
+            #Move a peça para a esquerda ao apertar o botão 'esquerda'
+            if keyboard.is_pressed('left'):
+                if not verifica_colisao(peca, posicao_y, posicao_x - 1):
+                    posicao_x -= 1
+            #Move a peça para a direita ao apertar o botão 'direita'
+            elif keyboard.is_pressed('right'):
+                if not verifica_colisao(peca, posicao_y, posicao_x + 1):
+                    posicao_x += 1
+            #Faz com que a peça caia mais rápido ao apertar o botão 'baixo'
+            elif keyboard.is_pressed('down'):
+                if not verifica_colisao(peca, posicao_y + 1, posicao_x):
+                    posicao_y += 1
+            #Faz com que a peça gire ao apertar o botão 'cima'
+            elif keyboard.is_pressed('up'):  # Gira a peça ao pressionar 'up'
+                peca_girada = girar_peca(peca)
+                if not verifica_colisao(peca_girada, posicao_y, posicao_x):
+                    peca = peca_girada
             #Limpa o terminal depois que a peça colide
             limpa_terminal()
             adiciona_peca(peca, posicao_y, posicao_x)
