@@ -11,13 +11,21 @@ tabuleiro = [['⬛' for _ in range(n_colunas)] for _ in range(n_linhas)]
 
 #Inicialização das matrizes das peças
 pecas = [
+    #Peça I
     ['1', '1', '1', '1'],
+    #Peça O
     [['1', '1'], ['1', '1']],
+    #Peça T
     [['1', '1', '1'], ['0', '1', '0']],
+    #Peça S
     [['0', '1', '1'], ['1', '1', '0']],
+    #Peça Z
     [['1', '1', '0'], ['0', '1', '1']],
+    #Peça J
     [['1', '0', '0'], ['1', '1', '1']],
+    #Peça L
     [['0', '0', '1'], ['1', '1', '1']],
+    #Bomba
     ['2']
 ]
 
@@ -77,7 +85,7 @@ def verifica_linhas():
     if n_linhas > 0:
         pontuacao += 100 * n_linhas
 
-#Função que a área da bomba ao colidir com outras peças
+#Função que limpa a área da bomba ao colidir com outras peças
 def limpa_area(px, py):
     for i in range(-1, 2):
         for j in range(-1, 2):
