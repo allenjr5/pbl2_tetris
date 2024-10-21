@@ -149,5 +149,10 @@ def main():
             limpa_terminal()
             adiciona_peca(peca, posicao_y, posicao_x)
 
-#Chamada da Função Principal
+        #Termina o jogo caso as peças cheguem ao topo do tabuleiro
+        if verifica_colisao(peca, 0, posicao_x):
+            print(f'Fim de Jogo! Pontuação Final: {pontuacao}')
+            break
+
+#Chama a Função Principal
 main()
